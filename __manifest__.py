@@ -11,8 +11,9 @@
     suggested products in a category-grouped popup or skip the suggestions.
     Selected products use standard POS pricing and product configuration.
     """,
-    'author': 'Talha Khan',
+    'author': 'Talha Khan | Odoo Developer | Technical Consultant',
     'maintainer': 'Talha Khan',
+    'website': 'https://github.com/talhatak/Optional-Products-POS',
     'depends': ['point_of_sale'],
     'data': ['views/product_template_views.xml'],
     'assets': {
@@ -24,6 +25,7 @@
         ],
     },
     'license': 'LGPL-3',
+    'images': ['static/description/banner.png'],
     'installable': True,
     'auto_install': False,
     'application': True,

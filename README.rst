@@ -39,4 +39,13 @@ optional-product feature, not run alongside the duplicate implementation.
 Existing ``optp_ext`` selections are not migrated automatically.
 
 Author: Talha Khan
-License: LGPL-3
+License: GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later).
+See ``LICENSE`` for the LGPL-3 terms and ``COPYING`` for the incorporated
+GPL-3 terms.
+
+Store description
+-----------------
+
+The Odoo Apps description, icon, and screenshots are in ``static/description``.
+Screenshots show demonstration records in Odoo 18. Sample products are not
+installed by this addon.
