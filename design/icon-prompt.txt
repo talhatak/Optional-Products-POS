@@ -1,3 +1,0 @@
-Generated with the built-in image_gen tool.
-
-Use case: logo-brand. Asset type: square app icon for an Odoo 18 addon called POS Optional Products. Create a polished 1024x1024 raster app icon, no text or letters. One rounded-square deep plum background (#714B67 and #632453), filling the canvas, with generous interior margins. Center a bold clean white shopping cart silhouette; above the basket, two small elegant coral product tiles with white plus symbols suggest adding optional extras. Large simple shapes instantly readable at 64px, restrained dimensional depth and subtle soft shadow, premium consistent SaaS app branding. No detailed food illustration, no surrounding mockup, no watermark, no text, no logos from other brands. Opaque background.
