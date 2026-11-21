@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.html).
 {
     'name': 'POS Optional Products',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Sales/Point of Sale',
     'summary': 'Suggest optional products in a popup after adding a POS item',
     'description': """Configure optional products on the product's Point of Sale

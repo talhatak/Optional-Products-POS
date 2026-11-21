@@ -9,7 +9,7 @@ class ProductProduct(models.Model):
     def _load_pos_data_fields(self, config_id):
         return list(dict.fromkeys([
             *super()._load_pos_data_fields(config_id),
-            'pos_optional_products_ids',
+            'pos_optional_product_ids',
         ]))
 
     def _load_pos_data(self, data):
@@ -18,7 +18,7 @@ class ProductProduct(models.Model):
         optional_template_ids = {
             template_id
             for product in products
-            for template_id in product.get('pos_optional_products_ids', [])
+            for template_id in product.get('pos_optional_product_ids', [])
         }
         if not optional_template_ids:
             return result

@@ -30,6 +30,15 @@ Behavior
 * Optional products are suggestions, not components, free items, or combo lines.
   Changing/removing a main item does not change previously added extras.
 
+Upgrading
+---------
+
+Version 18.0.1.0.1 renames the configuration field to
+``pos_optional_product_ids``, matching Odoo 19's native field name.
+Upgrade the addon and reopen the POS. The migration preserves existing
+selections in this addon's relation table. This remains an Odoo 18 addon;
+the field rename alone does not make it compatible with Odoo 19.
+
 Independence
 ------------
 

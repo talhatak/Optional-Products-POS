@@ -4,7 +4,7 @@ from odoo import fields, models
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    pos_optional_products_ids = fields.Many2many(
+    pos_optional_product_ids = fields.Many2many(
         comodel_name='product.template',
         relation='optional_products_pos_template_rel',
         column1='product_tmpl_id',

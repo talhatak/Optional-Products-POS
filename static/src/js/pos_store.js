@@ -21,7 +21,7 @@ patch(PosStore.prototype, {
 
         // Raw IDs survive even if a related template is not loaded in this POS.
         const product = line.product_id;
-        const templateIds = new Set(product.raw.pos_optional_products_ids || []);
+        const templateIds = new Set(product.raw.pos_optional_product_ids || []);
         templateIds.delete(product.product_tmpl_id.id);
         if (!templateIds.size) {
             return line;
