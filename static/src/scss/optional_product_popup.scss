@@ -1,0 +1,28 @@
+.optional-products-pos {
+    .optional-products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+    }
+
+    .optional-product-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        text-align: center;
+
+        .form-check-input {
+            align-self: flex-start;
+            margin: 0;
+        }
+    }
+
+    .optional-product-image {
+        width: 100%;
+        height: 110px;
+        object-fit: contain;
+    }
+}

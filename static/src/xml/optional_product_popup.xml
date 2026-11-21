@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="optional_products_pos.OptionalProductPopup">
+        <Dialog title="title" size="'lg'" contentClass="'optional-products-pos'">
+            <p class="text-muted mb-4">Add something extra? Select any products below, or cancel to keep only your main item.</p>
+            <section t-foreach="props.categories" t-as="category" t-key="category.id" class="mb-4">
+                <h4 class="mb-3" t-esc="category.name"/>
+                <div class="optional-products-grid">
+                    <label t-foreach="category.products" t-as="product" t-key="product.id"
+                           class="optional-product-card border rounded p-3"
+                           t-att-class="{'border-primary bg-primary-subtle': state.selectedIds.has(product.id)}">
+                        <input type="checkbox" class="form-check-input"
+                               t-att-checked="state.selectedIds.has(product.id)"
+                               t-on-change="() => this.toggleProduct(product)"/>
+                        <img t-if="product.getImageUrl()" t-att-src="product.getImageUrl()"
+                             t-att-alt="product.display_name" class="optional-product-image"/>
+                        <span class="fw-bold" t-esc="product.display_name"/>
+                    </label>
+                </div>
+            </section>
+            <t t-set-slot="footer">
+                <button type="button" class="btn btn-primary btn-lg" t-on-click="confirm">Add Selected</button>
+                <button type="button" class="btn btn-secondary btn-lg" t-on-click="cancel">Cancel</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>
