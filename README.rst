@@ -33,11 +33,6 @@ Behavior
 Independence
 ------------
 
-This addon does not require ``optp_ext`` and does not modify its files.
-It uses its own relation table. It is intended to replace that addon's
-optional-product feature, not run alongside the duplicate implementation.
-Existing ``optp_ext`` selections are not migrated automatically.
-
 Author: Talha Khan
 License: GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later).
 See ``LICENSE`` for the LGPL-3 terms and ``COPYING`` for the incorporated
