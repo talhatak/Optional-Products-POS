@@ -3,6 +3,9 @@ POS Optional Products
 
 Standalone addon for Odoo 18. Depends only on Point of Sale.
 
+The technical addon name is ``optional_product_pos``. Add the repository
+directory to your addons path so Odoo can discover that subfolder.
+
 Setup
 -----
 
@@ -50,6 +53,7 @@ GPL-3 terms.
 Store description
 -----------------
 
-The Odoo Apps description, icon, and screenshots are in ``static/description``.
+The Odoo Apps description, icon, and screenshots are in
+``optional_product_pos/static/description``.
 Screenshots show demonstration records in Odoo 18. Sample products are not
 installed by this addon.

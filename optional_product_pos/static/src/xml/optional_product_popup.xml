@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <t t-name="optional_products_pos.OptionalProductPopup">
+    <t t-name="optional_product_pos.OptionalProductPopup">
         <Dialog title="title" size="'lg'" contentClass="'optional-products-pos'">
             <p class="text-muted mb-4">Add something extra? Select any products below, or cancel to keep only your main item.</p>
             <section t-foreach="props.categories" t-as="category" t-key="category.id" class="mb-4">

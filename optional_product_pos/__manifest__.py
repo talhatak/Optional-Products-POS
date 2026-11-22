@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.html).
 {
     'name': 'POS Optional Products',
-    'version': '18.0.1.0.1',
+    'version': '18.0.1.0.2',
     'category': 'Sales/Point of Sale',
     'summary': 'Suggest optional products in a popup after adding a POS item',
     'description': """Configure optional products on the product's Point of Sale
@@ -18,10 +18,10 @@
     'data': ['views/product_template_views.xml'],
     'assets': {
         'point_of_sale._assets_pos': [
-            'optional_products_pos/static/src/js/optional_product_popup.js',
-            'optional_products_pos/static/src/js/pos_store.js',
-            'optional_products_pos/static/src/xml/optional_product_popup.xml',
-            'optional_products_pos/static/src/scss/optional_product_popup.scss',
+            'optional_product_pos/static/src/js/optional_product_popup.js',
+            'optional_product_pos/static/src/js/pos_store.js',
+            'optional_product_pos/static/src/xml/optional_product_popup.xml',
+            'optional_product_pos/static/src/scss/optional_product_popup.scss',
         ],
     },
     'license': 'LGPL-3',

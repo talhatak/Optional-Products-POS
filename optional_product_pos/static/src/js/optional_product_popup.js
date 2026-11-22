@@ -5,7 +5,7 @@ import { Dialog } from "@web/core/dialog/dialog";
 import { _t } from "@web/core/l10n/translation";
 
 export class OptionalProductPopup extends Component {
-    static template = "optional_products_pos.OptionalProductPopup";
+    static template = "optional_product_pos.OptionalProductPopup";
     static components = { Dialog };
     static props = {
         categories: Array,
