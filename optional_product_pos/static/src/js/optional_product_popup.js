@@ -1,20 +1,27 @@
 /** @odoo-module **/
 
-import { Component, useState } from "@odoo/owl";
-import { Dialog } from "@web/core/dialog/dialog";
+import { useState } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
+import { AbstractAwaitablePopup } from "@point_of_sale/app/popup/abstract_awaitable_popup";
 
-export class OptionalProductPopup extends Component {
-    static template = "optional_products_pos.OptionalProductPopup";
-    static components = { Dialog };
+export class OptionalProductPopup extends AbstractAwaitablePopup {
+    static template = "optional_product_pos.OptionalProductPopup";
     static props = {
         categories: Array,
-        getPayload: Function,
+        title: String,
+        id: Number,
+        zIndex: Number,
         close: Function,
+        resolve: Function,
+        cancelKey: String,
+        confirmKey: String,
+    };
+    static defaultProps = {
+        title: _t("Optional Products"),
     };
 
     setup() {
-        this.title = _t("Optional Products");
+        super.setup(...arguments);
         this.state = useState({ selectedIds: new Set() });
     }
 
@@ -26,14 +33,9 @@ export class OptionalProductPopup extends Component {
         }
     }
 
-    confirm() {
-        const products = this.props.categories.flatMap((category) => category.products);
-        this.props.getPayload(products.filter((product) => this.state.selectedIds.has(product.id)));
-        this.props.close();
-    }
-
-    cancel() {
-        this.props.getPayload();
-        this.props.close();
+    getPayload() {
+        return this.props.categories
+            .flatMap((category) => category.products)
+            .filter((product) => this.state.selectedIds.has(product.id));
     }
 }

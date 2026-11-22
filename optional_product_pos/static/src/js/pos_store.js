@@ -3,45 +3,47 @@
 import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
 import { PosStore } from "@point_of_sale/app/store/pos_store";
-import { makeAwaitable } from "@point_of_sale/app/store/make_awaitable_dialog";
 import { OptionalProductPopup } from "./optional_product_popup";
 
 patch(PosStore.prototype, {
-    async addLineToOrder(vals, order, opts = {}, configure = true) {
-        const line = await super.addLineToOrder(...arguments);
+    async addProductFromUi(product, options = {}) {
+        // Odoo 17 calls this after configuration, lots, and weighing succeed.
+        const line = await super.addProductFromUi(...arguments);
+        const order = line?.order;
         if (
             !line ||
-            !configure ||
-            opts.skipOptionalProducts ||
-            (vals.qty ?? 1) <= 0 ||
-            vals.refunded_orderline_id
+            !order ||
+            order.finalized ||
+            options.skipOptionalProducts ||
+            options.comboParent ||
+            options.refunded_orderline_id ||
+            (options.quantity ?? 1) <= 0
         ) {
             return line;
         }
 
-        // Raw IDs survive even if a related template is not loaded in this POS.
-        const product = line.product_id;
-        const templateIds = new Set(product.raw.pos_optional_product_ids || []);
-        templateIds.delete(product.product_tmpl_id.id);
+        const addedProduct = line.get_product();
+        const templateIds = new Set(addedProduct.pos_optional_product_ids || []);
+        templateIds.delete(addedProduct.product_tmpl_id);
         if (!templateIds.size) {
             return line;
         }
 
         const categories = new Map();
         const seenTemplates = new Set();
-        for (const candidate of this.models["product.product"].getAll()) {
-            const templateId = candidate.product_tmpl_id.id;
+        for (const candidate of Object.values(this.db.product_by_id)) {
+            const templateId = candidate.product_tmpl_id;
             if (
                 !templateIds.has(templateId) ||
                 seenTemplates.has(templateId) ||
                 !candidate.active ||
                 !candidate.available_in_pos ||
-                this.hiddenProductIds.has(candidate.id)
+                this.db.product_ids_to_not_display.includes(candidate.id)
             ) {
                 continue;
             }
             seenTemplates.add(templateId);
-            const category = candidate.pos_categ_ids[0];
+            const category = this.db.category_by_id[candidate.pos_categ_ids[0]];
             const categoryId = category?.id || 0;
             if (!categories.has(categoryId)) {
                 categories.set(categoryId, {
@@ -64,18 +66,43 @@ patch(PosStore.prototype, {
             category.products.sort((a, b) => a.display_name.localeCompare(b.display_name));
         }
 
-        const selectedProducts = await makeAwaitable(this.dialog, OptionalProductPopup, {
+        const { confirmed, payload } = await this.popup.add(OptionalProductPopup, {
             categories: sortedCategories,
         });
-        if (selectedProducts && this.get_order() === order && !order.finalized) {
-            for (const optionalProduct of selectedProducts) {
-                await this.addLineToOrder(
-                    { product_id: optionalProduct },
-                    order,
-                    { skipOptionalProducts: true },
-                    true
-                );
+        if (confirmed && payload) {
+            for (const optionalProduct of payload) {
+                if (this.get_order() !== order || order.finalized) {
+                    break;
+                }
+                // Gather standard options first. Passing our skip flag into
+                // addProductToCurrentOrder would mask a cancelled configurator
+                // in Odoo 17, because that method merges options after cancel.
+                const productOptions = await optionalProduct.getAddProductOptions();
+                if (!productOptions) {
+                    continue;
+                }
+                if (this.get_order() !== order || order.finalized) {
+                    break;
+                }
+                const optionalLine = await this.addProductFromUi(optionalProduct, {
+                    ...productOptions,
+                    skipOptionalProducts: true,
+                });
+                if (optionalLine && optionalProduct.tracking === "serial") {
+                    order.get_selected_orderline()?.set_quantity_by_lot();
+                }
+                this.numberBuffer.reset();
             }
+        }
+        // The Odoo 17 caller applies serial quantities to the selected line
+        // after this method returns, so keep it on the main serial product.
+        if (
+            addedProduct.tracking === "serial" &&
+            this.get_order() === order &&
+            !order.finalized &&
+            order.get_orderlines().includes(line)
+        ) {
+            order.select_orderline(line);
         }
         return line;
     },

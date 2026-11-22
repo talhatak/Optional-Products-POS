@@ -1,13 +1,14 @@
 POS Optional Products
 =====================
 
-Standalone addon for Odoo 18. Depends only on Point of Sale.
+Standalone addon for Odoo 17. Depends only on Point of Sale.
 
 Setup
 -----
 
 1. Install ``POS Optional Products`` from Apps.
-2. Open a product, enable Point of Sale, and open its Point of Sale tab.
+2. Open a product, enable Point of Sale, and open the Point of Sale section
+   of its Sales tab.
 3. Select products in ``Optional Products`` and save.
 4. Reopen the POS so it loads the updated suggestions.
 5. Add the main product. Select extras in the popup and click Add Selected,
@@ -30,17 +31,21 @@ Behavior
 * Optional products are suggestions, not components, free items, or combo lines.
   Changing/removing a main item does not change previously added extras.
 
-Upgrading
----------
+Version compatibility
+---------------------
 
-Version 18.0.1.0.1 renames the configuration field to
-``pos_optional_product_ids``, matching Odoo 19's native field name.
-Upgrade the addon and reopen the POS. The migration preserves existing
-selections in this addon's relation table. This remains an Odoo 18 addon;
-the field rename alone does not make it compatible with Odoo 19.
+This branch targets Odoo 17 and uses its POS session loaders and awaitable
+popup service. The technical addon name is ``optional_product_pos``. Add the
+repository directory to your addons path so Odoo can discover that subfolder.
+The configuration field is ``pos_optional_product_ids`` and uses the existing
+``optional_products_pos_template_rel`` relation table.
 
-Independence
-------------
+This is a separate Odoo-version build, not a database downgrade. Do not run an
+Odoo 18 database on Odoo 17. Only source-level checks have been performed for
+this port; installation and a full POS browser check on Odoo 17 remain pending.
+
+Author and license
+------------------
 
 Author: Talha Khan
 License: GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later).
@@ -50,6 +55,8 @@ GPL-3 terms.
 Store description
 -----------------
 
-The Odoo Apps description, icon, and screenshots are in ``static/description``.
-Screenshots show demonstration records in Odoo 18. Sample products are not
-installed by this addon.
+The Odoo Apps description, icon, and screenshots are in
+``optional_product_pos/static/description``.
+The included screenshots illustrate the Odoo 18 edition. Odoo 17 places the
+configuration under Sales > Point of Sale and uses its native popup framework;
+the appearance may differ. Sample products are not installed by this addon.

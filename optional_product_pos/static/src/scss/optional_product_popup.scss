@@ -1,4 +1,12 @@
 .optional-products-pos {
+    width: 900px;
+    max-width: calc(100vw - 32px);
+
+    .modal-body {
+        max-height: 65vh;
+        overflow-y: auto;
+    }
+
     .optional-products-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -13,6 +21,11 @@
         gap: 12px;
         cursor: pointer;
         text-align: center;
+
+        &.is-selected {
+            border-color: #714b67 !important;
+            background-color: rgba(113, 75, 103, 0.12);
+        }
 
         .form-check-input {
             align-self: flex-start;
